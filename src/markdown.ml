@@ -10,16 +10,18 @@ let getTitle =
 
 
 let getHeader =
-  "| No.| title |  artist | album | jacket  |  &nbsp; &nbsp; &nbsp; duration |\n|:--:|:-----:|:-------:|:-----:|:-------:|:-------------------------------:|\n"
+  "| No.|title | artist |album | jacket  |duration |\n|:-:|:----:|:---:|:----:|:-:|:-:|\n"
 
+
+(* "| No. &nbsp;|title | artist |album | jacket  |duration |\n|:--:|:-----:|:-------:|:-----:|:-------:|:-----:|\n" *)
 
 let make_row x =
   let open Tracks.Track in
   let image =
     Printf.sprintf "![](%s){#id .class width=50 height=50px}" x.image
   in
-  Printf.sprintf "|%02d &nbsp;|%s|%s|%s|%s|&nbsp;&nbsp;&nbsp;%s|\n" !count
-    x.title x.creator x.album image x.duration
+  Printf.sprintf "|%02d|%s|%s|%s|%s|%s|\n" !count x.title x.creator x.album
+    image x.duration
 
 
 let getBody s_xml =
@@ -39,5 +41,5 @@ let create_table s_xml =
 let make s_xml =
   let title = getTitle in
   let table = create_table s_xml in
-  title ^ "\n---\n" ^ table
+  title ^ "\n---\n" ^ table ^ "\n___\n"
 
