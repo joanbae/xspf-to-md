@@ -18,7 +18,7 @@ Convert an .xspf file to markdown file.
 ./main.native inputFileName outputFileName
 ```
 
-For example, ./main.native hello.xspf hello.md  
+For example, `./main.native hello.xspf` hello.md  
 Remember, outputFileName is the name you chosoe to save a .md file.  
 The default output filename is "playlist.md"
 
