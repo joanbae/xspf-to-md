@@ -55,7 +55,7 @@ let main =
   if Array.length Sys.argv < 2 then (
     prerr_endline "No InputFile was given" ;
     exit 255 ) ;
-  let out_fileName = try Sys.argv.(2) ^ ".md" with _ -> "playlist.md" in
+  let out_fileName = try Sys.argv.(2) with _ -> "playlist.md" in
   let inputFile = Sys.argv.(1) in
   let md = markdown (parse inputFile) in
   write md out_fileName
