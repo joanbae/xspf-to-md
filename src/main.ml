@@ -1,10 +1,13 @@
 open Xml
 module Tracks = Tracks.Tracks
 
+let count = ref 0
+
 let track (t: xml) =
   let getTextElement pos xdata =
     pcdata (List.hd (children (List.nth xdata pos)))
   in
+  count := !count + 1 ;
   let children = children t in
   let title = getTextElement 1 children in
   let creator = getTextElement 2 children in
@@ -15,7 +18,10 @@ let track (t: xml) =
     ( string_of_int (milisec / 60000)
     , String.sub (string_of_int (milisec mod 60000)) 0 2 )
   in
-  Tracks.track title creator album img (min ^ ":" ^ sec)
+  Tracks.make_track
+    (string_of_int !count)
+    title creator album img
+    (min ^ ":" ^ sec)
 
 
 let makeTracks (tlst: xml list) : Tracks.t =
@@ -30,15 +36,13 @@ let getTitle =
   Printf.sprintf "Playlist created on %02d/%02d/%02d\n" (month + 1) day year
 
 
-let parse input =
+let parse input : Tracks.t =
   let xdata = parse_file input in
   let tracklst = children (List.nth (children xdata) 1) in
   makeTracks tracklst
 
 
-let markdown xlst = Markdown.make xlst
-
-let message = "Hello!"
+let markdown (xlst: Tracks.t) = Markdown2.make (Tracks.tracks_rev xlst)
 
 let write md toFile =
   (* Write message to file *)
