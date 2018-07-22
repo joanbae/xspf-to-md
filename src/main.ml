@@ -42,7 +42,7 @@ let parse input : Tracks.t =
   makeTracks tracklst
 
 
-let markdown (xlst: Tracks.t) = Markdown2.make (Tracks.tracks_rev xlst)
+let markdown (xlst: Tracks.t) = Markdown.make (Tracks.tracks_rev xlst)
 
 let write md toFile =
   (* Write message to file *)
